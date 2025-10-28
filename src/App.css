@@ -1,0 +1,307 @@
+/* === GLOBAL RESETS === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+ 
+}
+
+/* === THEME VARIABLES === */
+:root {
+  --bg-gradient: linear-gradient(to right, #3a0ca3, #7209b7);
+  --bg-color: #181824;
+  --card-color: #25273c;
+  --text-color: #cacde8;
+  --text-muted: #777a92;
+  --accent-color: #4a90e2;
+  --hover-color: #e4e5f1;
+}
+
+body.light {
+  --bg-gradient: linear-gradient(to right, #aeb5ff, #e3e4ff);
+  --bg-color: #fafafa;
+  --card-color: #ffffff;
+  --text-color: #484b6a;
+  --text-muted: #9394a5;
+}
+
+body.light header {
+  background-image: url(images/bg-desktop-light.jpg);
+}
+
+
+/* === HEADER === */
+header {
+ background-image:url(images/bg-desktop-dark.jpg);
+ background-repeat: no-repeat;
+ background-size: cover;
+ width: 100%;
+  height: 300px;
+  display: flex;
+  margin-top: 5%;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 3rem;
+ margin-bottom: -11%;
+  position: relative;
+ 
+}
+
+header h1 {
+  color: white;
+  letter-spacing: 12px;
+  font-size: 2.2rem;
+}
+
+header button {
+  position: absolute;
+  right: 20%;
+  top: 3.5rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+/* === APP CONTAINER === */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: -80px;
+}
+
+/* === INPUT FIELD === */
+.todo-input {
+  background: var(--card-color);
+  width: 90%;
+  max-width: 500px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.todo-input input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.todo-input input::placeholder {
+  color: var(--text-muted);
+}
+
+/* === TODO LIST === */
+.todo-list {
+  background: var(--card-color);
+  width: 90%;
+  max-width: 500px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  z-index: 3;
+}
+.todo-item.dragging {
+  background-color: #3a3b53;
+  transform: rotate(1deg) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  cursor: grabbing;
+}
+
+/* Make draggable items feel "lifted" when picked up */
+.todo-item:active {
+  cursor: grabbing;
+}
+
+/* === DROPPABLE AREA HIGHLIGHT === */
+.todo-list.drag-over {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  transition: background 0.2s ease;
+}
+
+/* === TODO ITEM === */
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #696969;
+  /* transition: background 0.2s; */
+   transition: transform 0.2s ease, background-color 0.2s ease;
+   z-index: 3;
+}
+
+.todo-item:hover {
+  background-color: #2a2b3d;
+}
+
+.todo-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  accent-color: var(--accent-color);
+}
+
+.todo-item span {
+  flex: 1;
+  margin-left: 1rem;
+  color: var(--text-color);
+  transition: color 0.2s;
+}
+
+.todo-item.completed span {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.todo-item button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.todo-item:hover button {
+  visibility: visible;
+}
+
+/* === FOOTER === */
+footer {
+  background: var(--card-color);
+  width: 90%;
+  max-width: 500px;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+   z-index: 3;
+}
+
+.filters button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin: 0 0.4rem;
+  transition: color 0.2s;
+}
+
+.filters button:hover,
+.filters button.active {
+  color: var(--accent-color);
+}
+
+footer button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+footer button:hover {
+  color: var(--accent-color);
+}
+
+/* === BOTTOM TEXT === */
+.app p.drag-info {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 2rem;
+}
+.theme-toggle {
+  position: absolute;
+  right: 20%;
+  top: 3.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.theme-toggle img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) invert(1); /* keep white in dark bg */
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover img {
+  transform: rotate(30deg);
+}
+
+/* === LIGHT MODE === */
+body.light .theme-toggle img {
+  filter: none; /* show natural color in light mode */
+}
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  header {
+    background-image: url("images/bg-mobile-dark.jpg");
+    height: 200px;
+    padding-top: 2rem;
+    margin-bottom: -8%;
+  }
+
+  body.light header {
+    background-image: url("images/bg-mobile-light.jpg");
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 10px;
+  }
+
+  .theme-toggle {
+    right: 10%;
+    top: 2.2rem;
+  }
+
+  .todo-input,
+  .todo-list,
+  footer {
+    width: 90%;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  .filters {
+    order: 3;
+    margin-top: 0.5rem;
+  }
+
+  .app p.drag-info {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}
