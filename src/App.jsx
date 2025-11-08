@@ -20,7 +20,7 @@ export default function App() {
     return localStorage.getItem("theme") || "light";
   });
 
-const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:3000";
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 
