@@ -21,6 +21,8 @@ export default function App() {
   });
 
 const baseURL = "http://localhost:3000";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 
  // ✅ Load todos from backend
   useEffect(() => {
