@@ -38,10 +38,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
   };
 
 
-  // const filteredTodos = todos.filter(todo =>
-  //   filter === "active" ? !todo.completed :
-  //   filter === "completed" ? todo.completed : true
-  // );
+  
 
   // const addTodo = (text) => {
   //   setTodos([...todos, { id: Date.now(), text, completed: false }]);
@@ -103,10 +100,10 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 
   // ✅ Filtered todos
-  const filteredTodos = todos.filter(todo =>
-    filter === "active" ? !todo.completed :
-    filter === "completed" ? todo.completed : true
-  );
+  // const filteredTodos = todos.filter(todo =>
+  //   filter === "active" ? !todo.completed :
+  //   filter === "completed" ? todo.completed : true
+  // );
 
      // ✅ Handle drag end
   const handleOnDragEnd = (result) => {
@@ -118,6 +115,12 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 
     setTodos(items);
   };
+
+
+  const filteredTodos = todos.filter(todo =>
+    filter === "active" ? !todo.completed :
+    filter === "completed" ? todo.completed : true
+  );
   return (
     <div className={`app ${theme}`}>
   <header>
