@@ -8,36 +8,32 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// ✅ Define allowed origins for both local + deployed frontend
 const allowedOrigins = [
   "http://localhost:5173",
   "https://todobyblessing.netlify.app"
 ];
 
-// ✅ Configure CORS properly
+// ✅ Simplified CORS setup
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.warn("Blocked by CORS:", origin);
+        console.error("❌ CORS blocked request from:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
   })
 );
 
 app.use(express.json());
 
 // ✅ Test route
-app.get("/", (req, res) => {
-  res.send("Backend is running...");
-});
+app.get("/", (req, res) => res.send("Backend is running..."));
 
-// ✅ GET all todos
+// ✅ Get all todos
 app.get("/todos", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM todos ORDER BY id ASC");
@@ -48,7 +44,7 @@ app.get("/todos", async (req, res) => {
   }
 });
 
-// ✅ POST - Add a new todo
+// ✅ Add a todo
 app.post("/todos", async (req, res) => {
   try {
     const { text } = req.body;
@@ -63,15 +59,12 @@ app.post("/todos", async (req, res) => {
   }
 });
 
-// ✅ PUT - Update completion
+// ✅ Update todo completion
 app.put("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { completed } = req.body;
-    await pool.query("UPDATE todos SET completed = $1 WHERE id = $2", [
-      completed,
-      id,
-    ]);
+    await pool.query("UPDATE todos SET completed = $1 WHERE id = $2", [completed, id]);
     res.sendStatus(200);
   } catch (err) {
     console.error("❌ Error updating todo:", err.message);
@@ -79,7 +72,7 @@ app.put("/todos/:id", async (req, res) => {
   }
 });
 
-// ✅ DELETE - Delete a todo
+// ✅ Delete todo
 app.delete("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -91,5 +84,4 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
-// ✅ Start server
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
